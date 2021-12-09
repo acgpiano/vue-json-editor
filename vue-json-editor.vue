@@ -1,20 +1,22 @@
 <template>
   <div>
     <div class="jsoneditor-vue"></div>
-    <div class="jsoneditor-btns" v-if="showBtns!==false">
+    <div class="jsoneditor-btns" v-if="showBtns !== false">
       <button
         class="json-save-btn"
         type="button"
         @click="onSave()"
         :disabled="error"
-      >{{ locale[lang].save }}</button>
+      >
+        {{ locale[lang].save }}
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import "./assets/jsoneditor.css";
-import JsonEditor from "./assets/jsoneditor";
+import "./assets/jsoneditor.min.css";
+import JsonEditor from "./assets/jsoneditor.min.js";
 export default {
   // props: ['value', 'showBtns', 'mode', 'modes', 'lang'],
   props: {
@@ -22,22 +24,22 @@ export default {
     showBtns: [Boolean],
     expandedOnStart: {
       type: Boolean,
-      default: false
+      default: false,
     },
     mode: {
       type: String,
-      default: "tree"
+      default: "tree",
     },
     modes: {
       type: Array,
-      default: function() {
+      default: function () {
         return ["tree", "code", "form", "text", "view"];
-      }
+      },
     },
     lang: {
       type: String,
-      default: "en"
-    }
+      default: "en",
+    },
   },
   watch: {
     value: {
@@ -50,8 +52,8 @@ export default {
           this.expandAll();
         }
       },
-      deep: true
-    }
+      deep: true,
+    },
   },
   data() {
     return {
@@ -62,15 +64,15 @@ export default {
       expandedModes: ["tree", "view", "form"],
       locale: {
         it: {
-          save: "SALVA"
+          save: "SALVA",
         },
         en: {
-          save: "SAVE"
+          save: "SAVE",
         },
         zh: {
-          save: "保存"
-        }
-      }
+          save: "保存",
+        },
+      },
     };
   },
   mounted() {
@@ -87,7 +89,7 @@ export default {
           self.$emit("json-change", json);
           self.internalChange = true;
           self.$emit("input", json);
-          self.$nextTick(function() {
+          self.$nextTick(function () {
             self.internalChange = false;
           });
         } catch (e) {
@@ -97,7 +99,7 @@ export default {
       },
       onModeChange() {
         self.expandAll();
-      }
+      },
     };
 
     this.editor = new JsonEditor(
@@ -122,51 +124,55 @@ export default {
 
     async setEditor(value) {
       if (this.editor) this.editor.set(value);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
-  .ace_line_group {
-    text-align: left;
-  }
-  .json-editor-container {
-    display: flex;
-    width: 100%;
-  }
-  .json-editor-container .tree-mode {
-    width: 50%;
-  }
-  .json-editor-container .code-mode {
-    flex-grow: 1;
-  }
-  .jsoneditor-btns{
-    text-align: center;
-    margin-top:10px;
-  }
-  .jsoneditor-vue .jsoneditor-outer{
-    min-height:150px;
-  }
-  .jsoneditor-vue div.jsoneditor-tree{
-    min-height: 350px;
-  }
-  .json-save-btn{
-    background-color: #20A0FF;
-    border: none;
-    color:#fff;
-    padding:5px 10px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  .json-save-btn:focus{
-    outline: none;
-  }
-  .json-save-btn[disabled]{
-    background-color: #1D8CE0;
-    cursor: not-allowed;
-  }
-  code {
-    background-color: #f5f5f5;
-  }
+.ace_line_group {
+  text-align: left;
+}
+.json-editor-container {
+  display: flex;
+  width: 100%;
+}
+.json-editor-container .tree-mode {
+  width: 50%;
+}
+.json-editor-container .code-mode {
+  flex-grow: 1;
+}
+.jsoneditor-btns {
+  text-align: center;
+  margin-top: 10px;
+}
+.jsoneditor-vue {
+  height: 100%;
+  width: 100%;
+}
+.jsoneditor-vue .jsoneditor-outer {
+  min-height: 150px;
+}
+.jsoneditor-vue div.jsoneditor-tree {
+  min-height: 350px;
+}
+.json-save-btn {
+  background-color: #20a0ff;
+  border: none;
+  color: #fff;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.json-save-btn:focus {
+  outline: none;
+}
+.json-save-btn[disabled] {
+  background-color: #1d8ce0;
+  cursor: not-allowed;
+}
+code {
+  background-color: #f5f5f5;
+}
 </style>
