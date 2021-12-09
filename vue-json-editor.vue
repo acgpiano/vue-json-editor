@@ -148,7 +148,7 @@ export default {
   margin-top: 10px;
 }
 .jsoneditor-vue {
-  height: 100%;
+  height: 600px;
   width: 100%;
 }
 .jsoneditor-vue .jsoneditor-outer {
